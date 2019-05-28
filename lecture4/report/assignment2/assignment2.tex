@@ -1,0 +1,144 @@
+\documentclass[class=jsarticle, crop=false, dvipdfmx, fleqn]{standalone}
+\input{/Users/User/Documents/University/report_template/preamble/preamble}
+\begin{document}
+\section*{宿題2}
+
+
+\begin{comment}
+\subsection*{問題1}
+
+\(x\)が正規分布に従うとき，
+\(y = x^2\)を考えると，
+\(x\)と\(y\)は無相関であることと，
+独立ではないことを示す。
+
+
+
+
+\subsection*{問題2}
+\end{comment}
+
+
+次式を導出する。
+ここで，\(\bm{Z} \in \mathbb{R}^d,\ \bm{\Sigma} \in \mathbb{R}^{d \times d},\ \mu \in \mathbb{R}\)である。
+\begin{equation}
+    \pdv{}{\bm{Z}} \qty{\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z} - \mu(\bm{Z}^\mathrm{T}\bm{Z} - 1)} = 2 \bm{\Sigma}^{-1} \bm{Z} - 2\mu\bm{Z}
+\end{equation}
+
+\(\bm{Z},\ \bm{\Sigma}\)を次のようにおく。
+\begin{align}
+    & \bm{Z} = \begin{bmatrix} z_1 \\ \vdots \\ z_d \end{bmatrix} \\
+    & \bm{\Sigma}^{-1} = \bm{\Lambda} =
+        \begin{bmatrix}
+            \lambda_{11} & \cdots & \lambda_{1d} \\
+            \vdots & \ddots & \vdots \\
+            \lambda_{d1} & \cdots & \lambda{dd}
+        \end{bmatrix}
+\end{align}
+このとき，
+\begin{align}
+    \bm{Z}^\mathrm{T} \bm{Z}
+        & =
+            \begin{bmatrix} z_1 & \cdots & z_d \end{bmatrix}
+            \begin{bmatrix} z_1 \\ \vdots \\ z_d \end{bmatrix} \notag \\
+        & = {z_1}^2 + \cdots + {z_d}^2 \notag \\
+        & = \sum_{i=1}^{d} {z_i}^2
+\end{align}
+\begin{align}
+    \bm{\Sigma}^{-1} \bm{Z}
+        & = \bm{\Lambda} \bm{Z} \notag \\
+        & =
+            \begin{bmatrix}
+                \lambda_{11} & \cdots & \lambda_{1d} \\
+                \vdots & \ddots & \vdots \\
+                \lambda_{d1} & \cdots & \lambda_{dd}
+            \end{bmatrix}
+            \begin{bmatrix} z_1 \\ \vdots \\ z_d \end{bmatrix} \notag \\
+        & =
+            \begin{bmatrix}
+                \lambda_{11} z_1 + \cdots + \lambda_{1d} z_d \\
+                \vdots \\
+                \lambda_{d1} z_1 + \cdots + \lambda_{dd} z_d \\
+            \end{bmatrix} \notag \\
+        & =
+            \begin{bmatrix}
+                \sum_{j=1}^{d} \lambda_{1j} z_j \\
+                \vdots \\
+                \sum_{j=1}^{d} \lambda_{dj} z_j \\
+            \end{bmatrix}
+\end{align}
+\begin{align}
+    \bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z}
+        & = \bm{Z}^\mathrm{T} \bm{\Lambda} \bm{Z} \notag \\
+        & = \begin{bmatrix} z_1 & \cdots & z_d \end{bmatrix}
+            \begin{bmatrix}
+                \sum_{j=1}^{d} \lambda_{1j} z_j \\
+                \vdots \\
+                \sum_{j=1}^{d} \lambda_{dj} z_j \\
+            \end{bmatrix} \notag \\
+        & = z_1 \sum_{j=1}^{d} \lambda_{1j} z_j + \cdots + z_d \sum_{j=1}^{d} \lambda_{dj} z_j \notag \\
+        & = \sum_{i=1}^{d} z_i \sum_{j=1}^{d} \lambda_{ij} z_j \\
+        & = \sum_{i=1}^{d} \sum_{j=1}^{d} \lambda_{ij} z_i z_j \\
+        & = \sum_{i=1}^{d} \lambda_{ii} {z_i}^2 + \sum_{i=1}^{d-1} \sum_{j=i+1}^{d} \lambda_{ij} z_i z_j + \sum_{j=1}^{d-1} \sum_{i=j+1}^{d} \lambda_{ij} z_i z_j \\
+        & = \sum_{i=1}^{d} \lambda_{ii} {z_i}^2 + 2\sum_{i=1}^{d-1} \sum_{j=i+1}^{d} \lambda_{ij} z_i z_j
+\end{align}
+である。
+ここで，\(\bm{\Sigma}\)は対称行列であるから，
+\(\bm{\Lambda} = \bm{\Sigma}^{-1}\)も対称行列であり，
+\(\lambda_{ij} = \lambda_{ji}\)となることを用いた。
+このとき，
+\begin{equation}
+    \pdv{}{z_k} \qty(\bm{Z}^\mathrm{T} \bm{Z})
+        = \pdv{}{z_k} \qty(\sum_{i=1}^{d} {z_k}^2)
+        = 2 z_k
+\end{equation}
+\begin{align}
+    \pdv{}{z_k} \qty(\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z})
+        & = \pdv{}{z_k} \qty(\sum_{i=1}^{d} \sum_{j=1}^{d} \lambda_{ij} z_i z_j) \\
+        & = \pdv{}{z_k} \qty(\sum_{i=1}^{d} \lambda_{ii} {z_i}^2 + 2\sum_{i=1}^{d-1} \sum_{j=i+1}^{d} \lambda_{ij} z_i z_j) \\
+        & = 2 \lambda_{kk} z_k + 2\qty(\sum_{j=k+1}^{d} \lambda_{kj} z_j + \sum_{i=1}^{k-1} \lambda_{ik} z_i) \\
+        & = 2\sum_{l=1}^{d} \lambda_{kl} z_l
+\end{align}
+であるから，
+\begin{align}
+    \pdv{}{\bm{Z}} \qty(\bm{Z}^\mathrm{T} \bm{Z})
+        =
+            \begin{bmatrix}
+                \pdv{}{z_1} \qty(\bm{Z}^\mathrm{T} \bm{Z}) \\
+                \vdots \\
+                \pdv{}{z_d} \qty(\bm{Z}^\mathrm{T} \bm{Z}) \\
+            \end{bmatrix}
+        =
+            \begin{bmatrix}
+                2z_1 \\ \vdots \\ 2z_d
+            \end{bmatrix}
+        = 2 \bm{Z}
+\end{align}
+\begin{align}
+    \pdv{}{\bm{Z}} \qty(\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z})
+        & =
+            \begin{bmatrix}
+                \pdv{}{z_1} \qty(\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z}) \\
+                \vdots \\
+                \pdv{}{z_d} \qty(\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z}) \\
+            \end{bmatrix} \\
+        & =
+            \begin{bmatrix}
+                2\sum_{l=1}^{d} \lambda_{1l} z_l \\
+                \vdots \\
+                2\sum_{l=1}^{d} \lambda_{dl} z_l
+            \end{bmatrix} \\
+        & = 2 \bm{\Sigma}^{-1} \bm{Z}
+\end{align}
+となる。
+また，当然\(\pdv*{\mu}{\bm{Z}} = \bm{0}\)である。
+以上より，
+\begin{align}
+    \pdv{}{\bm{Z}} \qty{\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z} - \mu(\bm{Z}^\mathrm{T}\bm{Z} - 1)}
+        & = \pdv{}{\bm{Z}} \qty(\bm{Z}^\mathrm{T} \bm{\Sigma}^{-1} \bm{Z}) - \mu \pdv{}{\bm{Z}} \qty(\bm{Z}^\mathrm{T} \bm{Z}) \\
+        & = 2 \bm{\Sigma}^{-1} \bm{Z} - 2\mu\bm{Z}
+\end{align}
+
+
+
+\end{document}
