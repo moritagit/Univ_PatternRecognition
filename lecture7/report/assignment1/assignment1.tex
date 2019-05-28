@@ -11,16 +11,18 @@
 学習率は0.10とし，隠れ層のノード数は20とした。
 また，更新はバッチ学習で行った。
 結果を以下の表\ref{tab:result}，図\ref{fig:linear}--\ref{fig:slinear}に示す。
+前回の課題にあったパーセプトロンやMSEではうまく対応できなかった非線形な境界を持つデータに対しても，
+ある程度うまく対応できていることがわかる。
 
 
 \begin{table}[H]
     \centering
     \caption{結果}
-    \begin{tabular}{lrrrrr}
-        Data Type & {\#}Data & Epoch & Loss & {\#}Correct & Accuracy \\
-        linear & 100 & 100 & 0.4534 & 98 & 0.980 \\
-        nonlinear & 100 & 5 & 0.9373 & 74 & 0.740 \\
-        slinear & 500 & 30 & 0.3786 & 487 & 0.974
+    \begin{tabular}{lrrrrrrr}
+        Data Type & {\#}Data & {\#}hidden & Learning Rate & Epoch & Loss & {\#}Correct & Accuracy \\
+        linear & 100 & 10 & 0.90 & 500 & 0.1829 & 100 & 1.00 \\
+        nonlinear & 100 & 10 & 0.90 & 1,500 & 0.5186 & 83 & 0.830 \\
+        slinear & 500 & 10 & 0.90 & 500 & 0.1416 & 490 & 0.980
     \end{tabular}
     \label{tab:result}
 \end{table}

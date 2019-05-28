@@ -94,23 +94,22 @@ def train(model, x, y, lr, epochs, fig_path=None,):
 
 def main():
     # settings
-    #data_type = 'linear'
+    data_type = 'linear'
     #data_type = 'nonlinear'
-    data_type = 'slinear'
+    #data_type = 'slinear'
     data_path = f'../data/{data_type}-data.mat'
     fig_path = f'../figures/assignment1_1_{data_type}_result.png'
     np.random.seed(1)
 
 
     # hyperparameters
-    epochs = 100
-    lr = 0.10
-
+    epochs = 500
+    lr = 0.9
 
     # model
     input_size = 2
     output_size = 1
-    hidden_size = 20
+    hidden_size = 10
     model = Model([
         FC(input_size, hidden_size, sigmoid, deriv_sigmoid),
         FC(hidden_size, output_size, identity_function, deriv_identity_function),

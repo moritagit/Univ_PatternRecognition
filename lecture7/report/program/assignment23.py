@@ -51,7 +51,7 @@ def train(
         lr, epochs, batch_size,
         mode='MSE',
         ):
-    if mode.lower() not in ['mse', 'lms', 'widrow-hoff', 'mlp', 'nn']:
+    if mode.lower() not in ['mse', 'lms', 'widrow-hoff', 'nn']:
         raise ValueError(f'Unknown mode: {mode}')
     n_label = len(labels)
     train_X_split, train_y_split = split(train_X, train_y, batch_size)
@@ -192,7 +192,7 @@ class Linear(object):
 def main():
     # settings
     #mode = 'MSE'
-    mode = 'MLP'
+    mode = 'NN'
     valid_ratio = 1/6
     np.random.seed(0)
 
@@ -222,7 +222,7 @@ def main():
         test_X = add_augment_axis(test_X)
 
         model = Linear(d+1, n_labels)
-    elif mode.lower() in ['mlp', 'nn']:
+    elif mode.lower() in ['nn']:
         model = Model([
             FC(d, hidden_size, sigmoid, deriv_sigmoid),
             FC(hidden_size, n_labels, identity_function, deriv_identity_function),

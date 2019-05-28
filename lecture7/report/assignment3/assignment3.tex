@@ -12,12 +12,16 @@ MNISTを識別するニューラルネットワークを実装する。
 訓練データのうち10,000個をvalidation用に分け，
 学習状況の確認に利用した。
 
-混同行列は表\ref{tab:confusion_matrix_MLP}のようになり，
-また，各カテゴリごとの正解率等は表\ref{tab:result_MLP}のようになった。
+混同行列は表\ref{tab:confusion_matrix_NN}のようになり，
+また，各カテゴリごとの正解率等は表\ref{tab:result_NN}のようになった。
+
+なお，プログラムは\pageref{listing:assignment23}ページのListing \ref{listing:assignment23}に示した。
+関数についての説明は宿題2に示した通りである。
+また，モデルについては宿題1で示した通りである。
 
 \begin{table}[H]
 	\centering
-	\caption{MLPに対する混同行列}
+	\caption{NNに対する混同行列}
 	\begin{tabular}{|c||cccccccccc|} \hline
 			& 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline\hline
         0     & 957 & 0 & 0 & 2 & 0 & 6 & 7 & 2 & 6 & 0 \\
@@ -32,12 +36,12 @@ MNISTを識別するニューラルネットワークを実装する。
         9     & 19 & 11 & 2 & 12 & 85 & 1 & 0 & 83 & 6 & 790 \\
 		\hline
 	\end{tabular}
-	\label{tab:confusion_matrix_MLP}
+	\label{tab:confusion_matrix_NN}
 \end{table}
 
 \begin{table}[H]
 	\centering
-	\caption{MLPに対する各カテゴリごとの結果}
+	\caption{NNに対する各カテゴリごとの結果}
 	\begin{tabular}{crrr}
 		Category & {\#}Data & {\#}Correct & Accuracy \\ \hline
         0 & 980 & 957 & 0.977 \\
@@ -52,11 +56,8 @@ MNISTを識別するニューラルネットワークを実装する。
         9 & 1,009 & 790 & 0.783 \\
         All & 10,000 & 8,580 & 0.858 \\
 	\end{tabular}
-	\label{tab:result_MLP}
+	\label{tab:result_NN}
 \end{table}
 
-プログラムは\pageref{listing:assignment23}ページのListing \ref{listing:assignment23}に示した。
-関数についての説明は宿題2に示した通りである。
-また，モデルについては宿題1で示した通りである。
 
 \end{document}
