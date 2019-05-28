@@ -29,8 +29,9 @@ def add_augment_axis(data_X):
 
 
 def normalize(data_X):
-    data_X -= 128
-    data_X /= 128
+    #data_X -= 128
+    #data_X /= 128
+    data_X /= 256
     return data_X
 
 
@@ -75,7 +76,6 @@ def train(
 
         # validate
         y_pred = model(valid_X, is_training=False)
-        loss = compute_loss(y_pred, np.identity(n_label)[valid_y])
         y_pred = np.argmax(y_pred, axis=1)
         n_correct = (y_pred == valid_y).sum()
         acc = n_correct / len(valid_y)
@@ -95,7 +95,7 @@ def test(model, test_X, test_y, labels):
     print('test')
 
     # prediction
-    y_pred = model(test_X)
+    y_pred = model(test_X, is_training=False)
     y_pred = np.argmax(y_pred, axis=1)
 
     # calc scores
@@ -166,7 +166,9 @@ def print_result_in_TeX_tabular_format(result):
 
 
 def compute_loss(y_pred, y_true):
-    loss = np.mean((y_pred - y_true)**2)
+    #loss = np.mean((y_pred - y_true)**2)
+    log_y_pred = np.log(np.clip(y_pred, 1e-8, y_pred))
+    loss = np.mean(np.sum((- y_true * log_y_pred), axis=1))
     return loss
 
 
@@ -198,10 +200,11 @@ def main():
 
 
     # hyperparameters
-    hidden_size = 1000  # for only MLP
-    lr = 0.003
+    hidden_size = 32  # for only MLP
+    #lr = 0.0015  # MSE
+    lr = 0.5   # NN
     batch_size = 100
-    epochs = 10
+    epochs = 1000
 
 
     # load data
@@ -220,12 +223,12 @@ def main():
     if mode.lower() in ['mse', 'lms', 'widrow-hoff']:
         train_X = add_augment_axis(train_X)
         test_X = add_augment_axis(test_X)
-
         model = Linear(d+1, n_labels)
     elif mode.lower() in ['nn']:
         model = Model([
             FC(d, hidden_size, sigmoid, deriv_sigmoid),
-            FC(hidden_size, n_labels, identity_function, deriv_identity_function),
+            #FC(hidden_size, hidden_size, sigmoid, deriv_sigmoid),
+            FC(hidden_size, n_labels, softmax, deriv_softmax)
             ])
     else:
         raise ValueError(f'Unknown mode: {mode}')

@@ -19,6 +19,17 @@ def deriv_sigmoid(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
 
+def softmax(x):
+    x -= x.max(axis=1, keepdims=True)
+    x_exp = np.exp(x)
+    x_exp /= np.sum(x_exp, axis=1, keepdims=True)
+    return x_exp
+
+
+def deriv_softmax(x):
+    return softmax(x) * (1 - softmax(x))
+
+
 class FC(object):
     def __init__(self, input_size, output_size, activate_func, activate_func_deriv,):
         self.W = np.random.rand(input_size, output_size).astype(float)
