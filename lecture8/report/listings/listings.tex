@@ -1,0 +1,42 @@
+\documentclass[class=jsarticle, crop=false, dvipdfmx, fleqn]{standalone}
+\input{/Users/User/Documents/University/report_template/preamble/preamble}
+\begin{document}
+\section{プログラム}
+
+実行環境と用いた言語・ライブラリを以下の表\ref{tab:cp_env}に示す。
+
+\begin{table}[H]
+    \centering
+    \caption{プログラムの実行環境}
+    \begin{tabular}{lcl}
+        OS & : & Microsoft Windows 10 Pro (64bit) \\
+        CPU & : & Intel(R) Core(TM) i5-4300U \\
+        RAM & : & 4.00 GB \\
+        使用言語 & : & Python3.6 \\
+        可視化 & : & matplotlibライブラリ
+    \end{tabular}
+    \label{tab:cp_env}
+\end{table}
+
+
+ソースコードはListing \ref{listing:assignment1}に示した。
+以下に簡単に各関数の説明を記す。
+
+\begin{itemize}
+    \item load\_data \\
+        .matファイルからデータを取り出す。
+    \item plot \\
+        点群及び境界をプロットする。
+        2クラスをoとxで表し，
+        分類結果が正しいものを青，
+        誤っているものを赤で示す。
+    \item perceptron \\
+        パーセプトロンを用いて重みを求める関数。
+    \item mse \\
+        MSE法を用いて重みを求める関数。
+        LMS法を用いる場合と解析的に求める場合とを使い分けられる。
+\end{itemize}
+
+\reportlisting[listing:assignment1]{assignment1.py}{../program/assignment1.py}
+
+\end{document}

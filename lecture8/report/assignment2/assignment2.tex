@@ -1,0 +1,160 @@
+\documentclass[class=jsarticle, crop=false, dvipdfmx, fleqn]{standalone}
+\input{/Users/User/Documents/University/report_template/preamble/preamble}
+\begin{document}
+\section*{宿題2}
+
+
+\subsection*{(1)}
+
+二つの超平面
+\begin{align}
+	& \text{平面1:} \quad \bm{w}^\mathrm{T} \bm{x} - b = 1 \\
+	& \text{平面2:} \quad \bm{w}^\mathrm{T} \bm{x} - b = -1
+\end{align}
+の間のマージンが
+\begin{equation}
+	\frac{2}{||\bm{w}||}
+\end{equation}
+であることを示す。
+
+それぞれ平面1，平面2上にあり，
+かつその差分ベクトルがその二平面に垂直であるような
+2点\(\bm{x}_1\)，\(\bm{x}_2\)を考える。
+つまり，
+\begin{align}
+	& \bm{w}^\mathrm{T} \bm{x}_1 - b = 1 \\
+	& \bm{w}^\mathrm{T} \bm{x}_2 - b = -1 \\
+	& \bm{m} = \bm{x}_1 - \bm{x}_2 = k \bm{w}
+		\qquad (k \in \mathbb{R}_{\neq 0})
+\end{align}
+これらより，
+\begin{align}
+	\bm{w}^\mathrm{T} (\bm{x}_1 - \bm{x}_2)
+		& = \bm{w}^\mathrm{T} \bm{m} \\
+		& = \bm{w}^\mathrm{T} \cdot k \bm{w} \\
+		& = k ||\bm{w}||^2 \\
+		& = 2
+\end{align}
+となる。
+よって，
+\begin{align}
+	& k = \frac{2}{||\bm{w}||^2} \\
+	& \bm{m} = k \bm{w} = \frac{2}{||\bm{w}||^2} \bm{w}
+\end{align}
+となるから，結局，二平面の間のマージン\(||\bm{m}||\)は，
+\begin{equation}
+	||\bm{m}|| = \frac{2}{||\bm{w}||}
+\end{equation}
+となる。
+
+
+\clearpage
+\subsection*{(2)}
+
+ソフトマージンSVMの主形式
+\begin{align}
+	& \arg\min_{\bm{w},\ b,\ \bm{\xi}} \qty{\frac{1}{2} ||\bm{w}||^2 + C \sum_{i}^{n} \xi_i} \\
+\intertext{subject to}
+	& y_i (\bm{w}^\mathrm{T} \bm{x}_i - b) \ge 1 - \xi_i \\
+	& \xi \ge 0
+\end{align}
+から，双対形式を導く。
+
+一般に，主問題
+\begin{align}
+	& f^{*} = \min_{x \in \Xi} f(\bm{x}) \\
+\intertext{subject to}
+	& \bm{g}(\bm{x}) = \bm{0} \\
+	& \bm{h}(\bm{x}) \le \bm{0}
+\end{align}
+に対するLagrange関数は，
+\begin{equation}
+	L(\bm{x},\ \bm{\lambda},\ \bm{\mu}) = f(\bm{x}) + \bm{\lambda}^\mathrm{T} \bm{g}(\bm{x}) + \bm{\mu}^\mathrm{T} \bm{h}(\bm{x})
+\end{equation}
+となり，
+Lagrange双対問題は，
+\begin{align}
+	& f^{*} = \max_{\bm{\lambda,\ \bm{\mu}}} \mathrm{inf}_{\bm{x} \in \bm{X}} L(\bm{x},\ \bm{\lambda},\ \bm{\mu}) \\
+\intertext{subject to}
+	& \bm{\mu} \ge \bm{0}
+\end{align}
+となる。
+また，相補性条件より，
+\begin{equation}
+	\bm{\mu} \odot \bm{h} = \bm{0}
+\end{equation}
+が成立する。
+ここで，\(\odot\)は要素ごとの積を表す。
+
+これを今回の条件に適用すると，
+Lagrange関数は，
+\begin{align}
+	& L(\bm{w},\ b,\ \bm{\alpha},\ \bm{\beta})
+		= \frac{1}{2} ||\bm{w}||^2 + C \sum_{i}^{n} \xi_i
+			- \sum_{i}^{n} \alpha_i \qty{y_i (\bm{w}^\mathrm{T} \bm{x}_i - b) - 1 + \xi_i}
+			- \sum_{i}^{n} \beta_i \xi_i
+	\label{eq:lagrangian} \\
+\intertext{subject to}
+	& \bm{\alpha} \ge \bm{0} \label{eq:cond_alpha} \\
+	& \bm{\beta} \ge \bm{0} \label{eq:cond_beta} \\
+	& \alpha_i \qty{y_i (\bm{w}^\mathrm{T} \bm{x}_i - b) - 1 + \xi_i} = 0 \label{eq:cond_comple_alpha} \\
+	& \beta_i \xi_i = 0 \label{eq:cond_comple_beta}
+\end{align}
+\(L\)の\(\bm{w},\ b,\ \bm{\xi}\)による偏微分を考える。
+\begin{align}
+	\pdv{L}{\bm{w}}
+		& = \bm{w} - \sum_{i}^{n} \alpha_i y_i \bm{x}_i
+		= \bm{0} \\
+	\hat{\bm{w}} & = \sum_{i}^{n} \alpha_i y_i \bm{x}_i
+	\label{eq:w_hat}
+\end{align}
+また，
+\begin{equation}
+	\pdv{L}{b}
+		= \sum_{i}^{n} \alpha_i y_i
+		= 0
+	\label{eq:pdv_b}
+\end{equation}
+また，
+\begin{equation}
+	\pdv{L}{\xi_i}
+		= C - \alpha_i - \beta_i
+		= 0
+\end{equation}
+から，
+\begin{equation}
+	\alpha_i + \beta_i = C
+	\label{eq:alpha_beta_c}
+\end{equation}
+
+式(\ref{eq:lagrangian})のLagrange関数を，
+式(\ref{eq:w_hat})，(\ref{eq:pdv_b})，(\ref{eq:alpha_beta_c})を用いて変形する。
+\begin{align}
+	L(\bm{w},\ b,\ \bm{\alpha},\ \bm{\beta})
+		& = \frac{1}{2} ||\bm{w}||^2 + C \sum_{i}^{n} \xi_i
+			- \sum_{i}^{n} \alpha_i \qty{y_i (\bm{w}^\mathrm{T} \bm{x}_i - b) - 1 + \xi_i}
+			- \sum_{i}^{n} \beta_i \xi_i\\
+		& = \frac{1}{2} ||\bm{w}||^2 - \bm{w}^\mathrm{T} \sum_{i}^{n} \alpha_i y_i \bm{x}_i + + b \sum_{i}^{n} \alpha_i y_i \sum_{i}^{n} \alpha_i + \sum_{i}^{n} (C - \alpha_i - \beta_i) \xi_i \\
+		& = \frac{1}{2} ||\sum_{i}^{n} \alpha_i y_i \bm{x}_i||^2 - \sum_{j}^{n} \alpha_j y_j \bm{x}_j^\mathrm{T} \sum_{i}^{n} \alpha_i y_i \bm{x}_i + \sum_{i}^{n} \alpha_i \\
+		& = \sum_{i}^{n} \alpha_i - \frac{1}{2} \sum_{i, j}^{n} \alpha_i \alpha_j y_i y_j \bm{x}_i^\mathrm{T} \bm{x}_j
+\end{align}
+よって，\(\bm{w},\ \bm{\xi},\ \bm{\beta}\)がLagrange関数から消去されたので，結局，
+\begin{align}
+	& L(\bm{\alpha}) = \sum_{i}^{n} \alpha_i - \frac{1}{2} \sum_{i, j}^{n} \alpha_i \alpha_j y_i y_j \bm{x}_i^\mathrm{T} \bm{x}_j \\
+	& \bm{\alpha} = \arg\max_{\bm{\alpha}} L(\bm{\alpha})
+\end{align}
+が解くべき問題となる。
+また，式(\ref{eq:cond_alpha})，(\ref{eq:cond_beta})，(\ref{eq:alpha_beta_c})から，
+\begin{align}
+	0 \le \alpha_i \le C \\
+	0 \le \beta_i \le C
+\end{align}
+なので，式(\ref{eq:pdv_b})と合わせて，制約は，
+\begin{align}
+	0 \le \alpha_i \le C \\
+	\sum_{i}^{n} \alpha_i y_i = 0
+\end{align}
+となる。
+
+
+\end{document}
