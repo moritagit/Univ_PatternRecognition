@@ -200,7 +200,7 @@ def main():
 
 
     # hyperparameters
-    hidden_size = 32  # for only MLP
+    hidden_size = 32  # for only NN
     #lr = 0.0015  # MSE
     lr = 0.5   # NN
     batch_size = 100

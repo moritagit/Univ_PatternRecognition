@@ -44,11 +44,11 @@ def solve_svm(x, y, kernel=inner_prod, eps=1e-5):
     res = cvxopt.solvers.qp(qpP, qpq, qpG, qph, qpA, qpb)
     alpha = np.reshape(np.array(res['x']), -1)[:, np.newaxis]
 
-    w = np.sum(x * ((y*alpha) * np.ones(n)[:, np.newaxis]), axis=1)
     sv = (alpha > eps)
     isv = np.where(sv)[-1]
-    b = np.sum(w.T.dot(x[:, isv]) -y[isv]) / np.sum(sv)
 
+    w = np.sum(x * ((y*alpha) * np.ones(n)[:, np.newaxis]), axis=0)
+    b = np.sum(x[isv, :].dot(w) - y[isv]) / np.sum(sv)
     return w, b, alpha
 
 
@@ -64,8 +64,8 @@ def plot(x, y, w, b, alpha, eps=1e-5, fig_path=None):
     plt.plot(x[np.where((y<0) & ~sv), 0], x[np.where((y<0) & ~sv), 1], 'rx')
 
     if abs(w[0]) > abs(w[1]):
-        plt.plot([-1, 1],[(b+1+w[0])/w[1], (b+1-w[0])/w[1]])
-        plt.plot([-1, 1],[(b-1+w[0])/w[1], (b-1-w[0])/w[1]])
+        plt.plot([-1, 1], [(b+1+w[0])/w[1], (b+1-w[0])/w[1]])
+        plt.plot([-1, 1], [(b-1+w[0])/w[1], (b-1-w[0])/w[1]])
     else:
         plt.plot([(b+1+w[1])/w[0], (b+1-w[1])/w[0]], [-1, 1])
         plt.plot([(b-1+w[1])/w[0], (b-1-w[1])/w[0]], [-1, 1])
@@ -78,7 +78,7 @@ def plot(x, y, w, b, alpha, eps=1e-5, fig_path=None):
 def main():
     # settings
     eps = 1e-5
-    data_type = 'slinear'
+    data_type = 'linear'
     #data_type = 'qlinear'
     #data_type = 'slinear'
     #data_type = 'nonlinear'
