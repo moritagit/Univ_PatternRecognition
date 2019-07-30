@@ -1,0 +1,9 @@
+\begin{thebibliography}{1}
+
+\bibitem{schroff2015facenet}
+Florian Schroff, Dmitry Kalenichenko, and James Philbin.
+\newblock Facenet: A unified embedding for face recognition and clustering.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pp. 815--823, 2015.
+
+\end{thebibliography}
